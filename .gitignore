@@ -1,0 +1,20 @@
+cat > .gitignore << 'EOF'
+odoo/
+tutorials/
+__pycache__/
+*.pyc
+.venv/
+venv/
+.vscode/
+*.log
+*.pid
+filestore/
+sessions/
+*.dump
+*.sql
+*.db
+*.docx
+odoo.conf
+run-odoo.bat
+main.py
+EOF
