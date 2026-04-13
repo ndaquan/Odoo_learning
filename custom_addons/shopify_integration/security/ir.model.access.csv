@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_shopify_config_user,access.shopify.integration.config.user,model_shopify_integration_config,base.group_user,1,1,1,0
+access_shopify_log_user,access.shopify.sync.log.user,model_shopify_sync_log,base.group_user,1,0,1,0
+access_shopify_manual_wizard_user,access.shopify.manual.sync.wizard.user,model_shopify_manual_sync_wizard,base.group_user,1,1,1,1

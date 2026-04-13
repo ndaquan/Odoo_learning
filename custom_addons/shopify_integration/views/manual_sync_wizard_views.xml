@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="view_shopify_manual_sync_wizard" model="ir.ui.view">
+    <field name="name">shopify.manual.sync.wizard.form</field>
+    <field name="model">shopify.manual.sync.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Manual Shopify Sync">
+        <group>
+          <field name="config_id"/>
+          <field name="sync_choice"/>
+        </group>
+        <group string="Orders options">
+          <field name="order_use_date_range"/>
+          <field name="order_date_from" invisible="not order_use_date_range"/>
+          <field name="order_date_to" invisible="not order_use_date_range"/>
+        </group>
+        <footer>
+          <button name="action_run" type="object" string="Run" class="btn-primary"/>
+          <button string="Cancel" special="cancel" class="btn-secondary"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_shopify_manual_sync_wizard" model="ir.actions.act_window">
+    <field name="name">Manual Sync</field>
+    <field name="res_model">shopify.manual.sync.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+  </record>
+
+  <menuitem id="menu_shopify_manual_sync" name="Manual Sync" parent="menu_shopify_root" action="action_shopify_manual_sync_wizard" sequence="30"/>
+</odoo>

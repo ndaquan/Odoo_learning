@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="ir_cron_shopify_sync_products_hourly" model="ir.cron">
+    <field name="name">Shopify: Sync Products (Hourly)</field>
+    <field name="model_id" ref="model_shopify_integration_config"/>
+    <field name="user_id" ref="base.user_root"/>
+    <field name="state">code</field>
+    <field name="code">model.cron_sync_products()</field>
+    <field name="interval_number">1</field>
+    <field name="interval_type">hours</field>
+    <field name="active">True</field>
+  </record>
+
+  <record id="ir_cron_shopify_import_orders_15m" model="ir.cron">
+    <field name="name">Shopify: Import Orders (Every 15 Minutes)</field>
+    <field name="model_id" ref="model_shopify_integration_config"/>
+    <field name="user_id" ref="base.user_root"/>
+    <field name="state">code</field>
+    <field name="code">model.cron_import_orders()</field>
+    <field name="interval_number">15</field>
+    <field name="interval_type">minutes</field>
+    <field name="active">True</field>
+  </record>
+</odoo>

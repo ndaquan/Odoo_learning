@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <menuitem id="menu_shopify_root" name="Shopify" sequence="10"/>
+
+  <menuitem id="menu_shopify_config" name="Configurations" parent="menu_shopify_root" action="action_shopify_config" sequence="10"/>
+  <menuitem id="menu_shopify_logs" name="Sync Logs" parent="menu_shopify_root" action="action_shopify_sync_log" sequence="20"/>
+</odoo>
