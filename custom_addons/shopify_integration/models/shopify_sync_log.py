@@ -1,4 +1,5 @@
-from odoo import api, fields, models
+from odoo import _, api, fields, models     # Hàm dịch ngôn ngữ
+from odoo.exceptions import UserError
 
 class ShopifySyncLog(models.Model):
     _name = "shopify.sync.log"          # Têm model chính thức dùng ở nhiều nơi
@@ -7,7 +8,7 @@ class ShopifySyncLog(models.Model):
 
     config_id = fields.Many2one("shopify.integration.config", required=True, ondelete="restrict")       # ondelet="restrict": Nếu xóa 1 config thì không cho phép xóa nếu còn log liên quan
     sync_type = fields.Selection(
-        [("test", "Test"), ("production", "Production"), ("inventory", "Inventory"), ("order", "Order")],
+        [("test", "Test"), ("product", "Product"), ("inventory", "Inventory"), ("order", "Order")],
         required=True,
     )       # Selection: List các tuple (giá_trị_lưu_DB, nhãn_hiển_thị)
     status = fields.Selection(
@@ -29,3 +30,6 @@ class ShopifySyncLog(models.Model):
             "shopify_id": shopify_id,
             "operation_ref": operation_ref,
         })
+    
+    def unlink(self):       # 1 method đặc biệt của Odoo sẽ tự động gọi hàm khi người dùng bấm nút "Xóa" trên giao diện
+        raise UserError(_("Sync logs can't be deleted (audit trail)."))     # Dùng để giải quyết audit trail

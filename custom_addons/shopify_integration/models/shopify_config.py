@@ -1,6 +1,6 @@
 import uuid
 
-import request
+import requests
 
 from odoo import fields, models, _
 from odoo.exceptions import UserError
@@ -26,8 +26,9 @@ class ShopifyIntegrationConfig(models.Model):
     access_token_expires_at = fields.Datetime()
 
     api_version = fields.Char(required=True, default="2026-04")
-    warehouse_id = fields.Many2one("stock.warehouse", require=True)
+    warehouse_id = fields.Many2one("stock.warehouse", required=True)
     last_sync = fields.Datetime()
+    shopify_location_id = fields.Char()
 
     def _refresh_access_token(self):
         """Xin token mới bằng client credentials grant và lưu vào config."""
@@ -35,7 +36,7 @@ class ShopifyIntegrationConfig(models.Model):
 
         url = (self.shop_url or "").rstrip("/") + "/admin/oauth/access_token"
         try:
-            resp = requests.post(       # Gửi request POST đến Shopify để xin token mới
+            resp = requests.post(       # Gọi thư viện request và Gửi request POST đến HTTP của Shopify để xin token mới    |   resp ở đây sẽ khác giá trị so với resp ở requests.request vì không gọi cùng 1 phương thức (POST =! REQUEST)
                 url,
                 headers={"Content-Type": "application/x-www-form-urlencoded"},
                 data={
@@ -84,7 +85,7 @@ class ShopifyIntegrationConfig(models.Model):
 
     def action_test_connection(self):
         self.ensure_one()
-        operation_ref = str(uuid.uuid4())       # Tạo ID cho mỗi một lần test, để sau này tra cứu dễ dàng hơn
+        operation_ref = str(uuid.uuid4())       # Tạo ID riêng biệt cho mỗi một lần test, để sau này tra cứu dễ dàng hơn
         log = self.env["shopify.sync.log"]      # Lấy model reference trỏ đến model shopify_sync_log (chỉ lấy đối tượng không lấy dữ liệu)
 
         try:
@@ -98,7 +99,7 @@ class ShopifyIntegrationConfig(models.Model):
                     "test",
                     "partial",
                     f"Connection OK. Shop: {shop_name}. "
-                    f"Warning: Shopify responded with API version {used_version} (fell foward from {self.api_version}).",
+                    f"Warning: Shopify responded with API version {used_version} (fell forward from {self.api_version}).",
                     operation_ref=operation_ref,        # operation_ref : mã định danh duy nhất được tạo ra ở phía trên và truyền qua cho log
                 )
             else:

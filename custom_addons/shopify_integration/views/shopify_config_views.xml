@@ -5,9 +5,11 @@
     <field name="model">shopify.integration.config</field>
     <field name="arch" type="xml">
       <list>
+        <field name="active" optional="show"/>
         <field name="name"/>
         <field name="shop_url"/>
         <field name="warehouse_id"/>
+        <field name="access_token_expires_at" optional="show"/>
         <field name="last_sync"/>
       </list>
     </field>
@@ -19,12 +21,14 @@
     <field name="arch" type="xml">
       <form string="Shopify Configuration">
         <header>
-          <button name="action_test_connection" type="object" string="Test Connection" class="btn-primary"/>
+          <button name="action_test_connection" type="object" string="Test Connection" class="btn-primary" 
+                  confirm="Test connection to Shopify now?"/>
         </header>
         <sheet>
           <group>
             <field name="name"/>
             <field name="shop_url"/>
+            <field name="api_version"/>
             <field name="warehouse_id"/>
             <field name="last_sync" readonly="1"/>
           </group>
@@ -33,7 +37,9 @@
             <field name="client_secret" password="True"/>
             <field name="access_token" password="True" readonly="1"/>
             <field name="access_token_expires_at" readonly="1"/>
-            <field name="api_version"/>
+          </group>
+          <group string="Inventory">
+            <field name="shopify_location_id" readonly="1"/>
           </group>
         </sheet>
       </form>

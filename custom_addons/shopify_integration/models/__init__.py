@@ -4,3 +4,4 @@ from . import shopify_sync_log
 from . import shopify_product_sync
 from . import shopify_order_sync
 from . import shopify_inventory_sync
+from . import shopify_product_fields
