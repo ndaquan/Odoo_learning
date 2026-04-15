@@ -63,7 +63,7 @@ class ShopifyIntegrationConfig(models.Model):
         updated = 0
         errors = 0
 
-        self._inv_log("success", "Inventory sync started.", op=op)
+        self._inv_log("partial", "Inventory sync started.", op=op)
 
         try:
             shopify_location_id = self._ensure_shopify_location_id(op)

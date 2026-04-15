@@ -5,18 +5,18 @@
   <menuitem id="menu_shopify_config"
             name="Configurations"
             parent="menu_shopify_root"
-            action="action_shopify_config"
+            action="shopify_integration.action_shopify_config"
             sequence="10"/>
 
   <menuitem id="menu_shopify_logs"
             name="Sync Logs"
             parent="menu_shopify_root"
-            action="action_shopify_sync_log"
+            action="shopify_integration.action_shopify_sync_log"
             sequence="20"/>
 
   <menuitem id="menu_shopify_manual_sync"
             name="Manual Sync"
             parent="menu_shopify_root"
-            action="action_shopify_manual_sync_wizard"
+            action="shopify_integration.action_shopify_manual_sync_wizard"
             sequence="30"/>
 </odoo>

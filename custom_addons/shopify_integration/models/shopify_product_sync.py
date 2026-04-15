@@ -84,6 +84,8 @@ class ShopifyIntegrationConfig(models.Model):
                         "description_sale": desc,                       # Mô tả sạch (text thuần)
                         "categ_id": categ.id,                           # ID của danh mục (ở trên)
                         "x_shopify_product_id": shopify_product_id,     # Lưu ID gốc của Shopify
+                        "type": "consu",
+                        "is_storable": True,
                     }
                     if tmpl:
                         tmpl.write(tmpl_vals)   # Cập nhật lại thông tin và tăng biến updated
@@ -103,8 +105,11 @@ class ShopifyIntegrationConfig(models.Model):
                             price = 0.0
 
                         var = ProductVar.search([("x_shopify_variant_id", "=", shopify_variant_id)], limit=1)   # Tìm biến thể theo field đã thêm vào model
+
+                        if not var:
+                            var = tmpl.product_variant_id
+
                         var_vals = {
-                            "product_tmpl_id": tmpl.id,                     # ID của sản phẩm chính (do Odoo tạo)
                             "x_shopify_variant_id": shopify_variant_id,     # ID biến thể
                             "x_shopify_inventory_item_id": inventory_item_id or False,  # ID inventory item
                             "default_code": sku,                            # Mã SKU
@@ -115,9 +120,6 @@ class ShopifyIntegrationConfig(models.Model):
                         if var:
                             var.write(var_vals)
                             updated += 1
-                        else:
-                            ProductVar.create(var_vals)
-                            created += 1
 
                 except Exception as e:
                     errors += 1

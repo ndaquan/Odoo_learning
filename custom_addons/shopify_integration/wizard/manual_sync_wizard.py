@@ -35,14 +35,16 @@ class ShopifyManualSyncWizard(models.TransientModel):
 
         if self.sync_choice in ("products", "all"):
             try:
-                self._add_totals(totals, cfg.sync_products())
+                with self.env.cr.savepoint():
+                    self._add_totals(totals, cfg.sync_products())
             except Exception as e:
                 totals["errors"] += 1
                 errors_text.append(f"Products: {e}")
 
         if self.sync_choice in ("inventory", "all"):
             try:
-                self._add_totals(totals, cfg.sync_inventory())
+                with self.env.cr.savepoint():
+                    self._add_totals(totals, cfg.sync_inventory())
             except Exception as e:
                 totals["errors"] += 1
                 errors_text.append(f"Inventory: {e}")
@@ -53,14 +55,15 @@ class ShopifyManualSyncWizard(models.TransientModel):
                     if self.order_date_from > self.order_date_to:
                         raise ValueError("order_date_from must be <= order_date_to")
 
-                self._add_totals(
-                    totals,
-                    cfg.import_orders(
-                        date_from=self.order_date_from,
-                        date_to=self.order_date_to,
-                        use_last_sync=not self.order_use_date_range,
-                    ),
-                )
+                with self.env.cr.savepoint():
+                    self._add_totals(
+                        totals,
+                        cfg.import_orders(
+                            date_from=self.order_date_from,
+                            date_to=self.order_date_to,
+                            use_last_sync=not self.order_use_date_range,
+                        ),
+                    )
             except Exception as e:
                 totals["errors"] += 1
                 errors_text.append(f"Orders: {e}")

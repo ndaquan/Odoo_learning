@@ -27,26 +27,21 @@
         <field name="shopify_id"/>
         <field name="operation_ref"/>
 
-        <separator/>
 
         <filter string="Success" name="status_success" domain="[('status','=','success')]"/>
         <filter string="Partial" name="status_partial" domain="[('status','=','partial')]"/>
         <filter string="Failed" name="status_failed" domain="[('status','=','failed')]"/>
 
-        <separator/>
 
         <filter string="Products" name="type_product" domain="[('sync_type','=','product')]"/>
         <filter string="Inventory" name="type_inventory" domain="[('sync_type','=','inventory')]"/>
         <filter string="Orders" name="type_order" domain="[('sync_type','=','order')]"/>
         <filter string="Test" name="type_test" domain="[('sync_type','=','test')]"/>
 
-        <separator/>
 
-        <group expand="0" string="Group By">
-          <filter string="Store" name="group_config" context="{'group_by':'config_id'}"/>
-          <filter string="Type" name="group_type" context="{'group_by':'sync_type'}"/>
-          <filter string="Status" name="group_status" context="{'group_by':'status'}"/>
-        </group>
+        <filter string="Store" name="group_config" context="{'group_by':'config_id'}"/>
+        <filter string="Type" name="group_type" context="{'group_by':'sync_type'}"/>
+        <filter string="Status" name="group_status" context="{'group_by':'status'}"/>
       </search>
     </field>
   </record>
